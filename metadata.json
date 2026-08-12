@@ -1,0 +1,6 @@
+{
+  "name": "TalentBridge",
+  "description": "A platform used by TechNL to manage applicants, internships, student progress, and skills development.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
