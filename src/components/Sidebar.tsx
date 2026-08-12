@@ -71,9 +71,10 @@ export default function Sidebar({
 
   return (
     <div
-      className={`min-h-screen bg-slate-900 border-r border-slate-800 text-slate-300 flex flex-col justify-between transition-all duration-300 relative ${
+      className={`min-h-screen border-r border-slate-800 text-slate-300 flex flex-col justify-between transition-all duration-300 relative ${
         collapsed ? "w-20" : "w-64"
       }`}
+      style={{backgroundImage: 'linear-gradient(to bottom, #991E72, #74C8CB)'}}
     >
       {/* COLLAPSE FLAGGING TOGGLER */}
       <button

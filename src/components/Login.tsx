@@ -32,10 +32,10 @@ export default function Login({ onLogin }: LoginProps) {
   return (
     <div id="login-container" className="min-h-screen bg-slate-50 flex flex-col lg:flex-row font-sans">
       {/* LEFT SIDE: ILLUSTRATIVE BRAND HUB */}
-      <div className="lg:w-1/2 bg-indigo-950 text-white p-8 lg:p-16 flex flex-col justify-between relative overflow-hidden">
+      <div className="lg:w-1/2 text-white p-8 lg:p-16 flex flex-col justify-between relative overflow-hidden" style={{backgroundImage: 'linear-gradient(to right, #991E72, #74C8CB)'}}>
         {/* Ambient light effects representing modern premium portals */}
-        <div className="absolute top-[-20%] left-[-25%] w-[80%] h-[80%] rounded-full bg-indigo-500/20 blur-3xl" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-violet-600/10 blur-3xl" />
+        <div className="absolute top-[-20%] left-[-25%] w-[80%] h-[80%] rounded-full bg-white/10 blur-3xl" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-white/5 blur-3xl" />
 
         {/* TOP BRAND HEADER */}
         <div className="relative z-10 flex items-center space-x-3">
@@ -50,41 +50,41 @@ export default function Login({ onLogin }: LoginProps) {
 
         {/* MAIN EMBODIMENT & TAGLINE */}
         <div className="my-auto py-12 relative z-10 max-w-md">
-          <div className="inline-flex items-center space-x-2 bg-indigo-900/60 border border-indigo-800 px-3 py-1.5 rounded-full text-xs text-violet-300 font-semibold mb-6">
+          <div className="inline-flex items-center space-x-2 bg-white/15 border border-white/30 px-3 py-1.5 rounded-full text-xs text-white font-semibold mb-6">
             <Sparkles className="h-3.5 w-3.5" />
             <span>Empowering NL's Next Generation of Tech</span>
           </div>
           <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight mb-4">
             Bridge Talent.<br />Build Futures.
           </h1>
-          <p className="text-indigo-200 text-lg font-light leading-relaxed mb-8">
+          <p className="text-white/90 text-lg font-light leading-relaxed mb-8">
             The exclusive SaaS placement portal connecting Newfoundland & Labrador high school students with premium technical internships, direct mentor pipelines, and custom learning paths.
           </p>
 
           {/* CUSTOM VECTOR ART STATS REPRESENTATION */}
-          <div className="bg-indigo-900/40 backdrop-blur-md rounded-2xl border border-indigo-500/15 p-6 space-y-4">
-            <p className="text-xs font-bold uppercase tracking-wider text-indigo-300">Newfoundland Talent Impact</p>
+          <div className="backdrop-blur-md rounded-2xl border border-white/20 p-6 space-y-4" style={{backgroundColor: 'rgba(255, 255, 255, 0.08)'}}>
+            <p className="text-xs font-bold uppercase tracking-wider text-white/80">Newfoundland Talent Impact</p>
             <div className="grid grid-cols-3 gap-4">
               <div>
                 <span className="text-3xl font-extrabold text-white">325+</span>
-                <p className="text-xs text-indigo-200">Registered Students</p>
+                <p className="text-xs text-white/80">Registered Students</p>
               </div>
-              <div className="border-l border-indigo-800 pl-4">
-                <span className="text-3xl font-extrabold text-emerald-400">72%</span>
-                <p className="text-xs text-indigo-200">Reapplicant Success</p>
+              <div className="border-l border-white/20 pl-4">
+                <span className="text-3xl font-extrabold text-emerald-300">72%</span>
+                <p className="text-xs text-white/80">Reapplicant Success</p>
               </div>
-              <div className="border-l border-indigo-800 pl-4">
-                <span className="text-3xl font-extrabold text-violet-400">12K+</span>
-                <p className="text-xs text-indigo-200">Skills XP Earned</p>
+              <div className="border-l border-white/20 pl-4">
+                <span className="text-3xl font-extrabold text-cyan-200">12K+</span>
+                <p className="text-xs text-white/80">Skills XP Earned</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* FOOTER */}
-        <div className="relative z-10 text-xs text-indigo-400 flex justify-between items-center border-t border-indigo-900/60 pt-6">
+        <div className="relative z-10 text-xs text-white/70 flex justify-between items-center border-t border-white/20 pt-6">
           <span>© 2026 TechNL. All rights reserved.</span>
-          <span className="hover:text-indigo-200 cursor-pointer">Support Center</span>
+          <span className="hover:text-white cursor-pointer transition-colors">Support Center</span>
         </div>
       </div>
 

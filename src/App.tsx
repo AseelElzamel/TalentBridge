@@ -275,7 +275,7 @@ export default function App() {
       ) : (
         <>
           {/* TOP DUAL PRESENTATION FRAME SECTOR CONTROL BAR */}
-          <header className="bg-slate-900 border-b border-slate-850 py-3.5 px-6 flex justify-between items-center text-white z-40 select-none">
+          <header className="border-b border-slate-850 py-3.5 px-6 flex justify-between items-center text-white z-40 select-none" style={{backgroundImage: 'linear-gradient(to right, #991E72, #74C8CB)'}}>
             <div className="flex items-center space-x-3.5">
               <span className="text-sm font-black bg-indigo-600 rounded-lg px-2.5 py-1 flex items-center space-x-1.5 shadow-sm">
                 <Sparkles className="h-4 w-4 text-amber-300 animate-spin" />
