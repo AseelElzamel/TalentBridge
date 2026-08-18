@@ -55,6 +55,7 @@ export interface StudentProfile {
   goals: InternshipGoal[];
   flaggedAtRisk?: boolean;
   profilePicture?: string; // Base64 encoded image
+  assignedCourses?: string[]; // Course IDs assigned by staff
 }
 
 export interface JournalEntry {

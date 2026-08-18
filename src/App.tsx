@@ -13,6 +13,7 @@ import LearningHub from "./components/LearningHub";
 import AnalyticsDashboard from "./components/AnalyticsDashboard";
 import StudentCalendarPage from "./components/StudentCalendarPage";
 import MyProfilePage from "./components/MyProfilePage";
+import StaffLearningHub from "./components/StaffLearningHub";
 
 // Icons
 import {
@@ -369,13 +370,13 @@ export default function App() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-3">
                           <h3 className="font-extrabold text-sm text-slate-900">Placement Pipelines Overview</h3>
-                          <p className="text-xs text-slate-500">Quickly assign candidates to partner employers like TechNova, CodeVerse, and InnovateX.</p>
+                          <p className="text-xs text-slate-500">Assign students to partner employers like Verafin, Kraken, and MCE.</p>
                           <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center space-y-3">
                             <span className="text-[11px] text-slate-450 uppercase font-black block tracking-widest">Active Placed partners</span>
                             <div className="grid grid-cols-3 gap-2 text-xs font-bold text-slate-700">
-                              <span className="bg-white p-2 rounded-lg border border-slate-200">TechNova (12)</span>
-                              <span className="bg-white p-2 rounded-lg border border-slate-200">CodeVerse (8)</span>
-                              <span className="bg-white p-2 rounded-lg border border-slate-200">InnovateX (6)</span>
+                              <span className="bg-white p-2 rounded-lg border border-slate-200">Verafin (8)</span>
+                              <span className="bg-white p-2 rounded-lg border border-slate-200">Kraken (6)</span>
+                              <span className="bg-white p-2 rounded-lg border border-slate-200">MCE (5)</span>
                             </div>
                           </div>
                         </div>
@@ -403,14 +404,6 @@ export default function App() {
                     />
                   )}
 
-                  {activeTab === "pipeline" && currentUser.role === "TechNL Staff" && (
-                    <StaffDashboard
-                      applications={allApplications}
-                      onUpdateStatus={handleUpdateStatus}
-                      onAddStaffNotes={handleAddStaffNotes}
-                    />
-                  )}
-
                   {activeTab === "internships" && currentUser.role === "TechNL Staff" && (
                     <InternshipPortal
                       role="TechNL Staff"
@@ -419,22 +412,25 @@ export default function App() {
                     />
                   )}
 
-                  {activeTab === "skills-gap" && ((currentUser.role === "TechNL Staff") || (currentUser.role === "Student" && latestApp?.status === "Rejected")) && (
+                  {activeTab === "skills-gap" && currentUser.role === "Student" && latestApp?.status === "Rejected" && (
                     <SkillsGapView
                       application={latestApp}
                       onGoToHub={() => setActiveTab("learning-hub")}
                     />
                   )}
 
-                  {activeTab === "learning-hub" && studentProfile && (
-                    <LearningHub
-                      profile={studentProfile}
-                      onUpdateProfile={handleUpdateStudentProfile}
-                    />
-                  )}
-
-                  {activeTab === "analytics" && currentUser.role === "TechNL Staff" && (
-                    <AnalyticsDashboard />
+                  {activeTab === "learning-hub" && (
+                    currentUser.role === "TechNL Staff" ? (
+                      <StaffLearningHub
+                        allStudentProfiles={allStudentProfiles}
+                        onUpdateProfile={handleUpdateStudentProfile}
+                      />
+                    ) : studentProfile ? (
+                      <LearningHub
+                        profile={studentProfile}
+                        onUpdateProfile={handleUpdateStudentProfile}
+                      />
+                    ) : null
                   )}
 
                   {activeTab === "calendar" && studentProfile && (
@@ -457,7 +453,7 @@ export default function App() {
                         </div>
                         <div className="text-right">
                           <span className="text-[11px] font-bold text-slate-400 block uppercase">CO-OP SPONSOR</span>
-                          <span className="text-sm font-extrabold text-slate-800">TechNova Solutions NL</span>
+                          <span className="text-sm font-extrabold text-slate-800">Verafin Inc.</span>
                         </div>
                       </div>
 
@@ -548,7 +544,7 @@ export default function App() {
                         ) : (
                           <>
                             <h3 className="font-extrabold text-xs text-slate-800">My Internship Status</h3>
-                            <p className="text-[10px] text-slate-450 leading-relaxed">TechNova Solutions NL Co-op Active</p>
+                            <p className="text-[10px] text-slate-450 leading-relaxed">Verafin Inc. Co-op Active</p>
                           </>
                         )}
                       </div>

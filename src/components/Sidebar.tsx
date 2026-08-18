@@ -6,8 +6,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Compass,
-  FileBarChart2,
-  GitBranch,
   LayoutDashboard,
   LogOut,
   Settings,
@@ -57,11 +55,8 @@ export default function Sidebar({
   const staffItems: SidebarItem[] = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "applicants", label: "Applicants", icon: Users, badge: pendingCount > 0 ? pendingCount : undefined, badgeColor: "bg-indigo-600 text-white" },
-    { id: "pipeline", label: "Pipeline Board", icon: GitBranch },
     { id: "internships", label: "Internships", icon: Briefcase, badge: atRiskCount > 0 ? atRiskCount : undefined, badgeColor: "bg-rose-500 text-white" },
-    { id: "skills-gap", label: "Skills Gap", icon: Compass },
     { id: "learning-hub", label: "Learning Hub", icon: BookOpen },
-    { id: "analytics", label: "Reports & Analytics", icon: FileBarChart2 },
   ];
 
   const studentItems: SidebarItem[] = [

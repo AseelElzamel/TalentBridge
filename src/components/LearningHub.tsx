@@ -8,12 +8,92 @@ interface LearningHubProps {
   onUpdateProfile: (updated: StudentProfile) => void;
 }
 
+// Map course IDs (from staff) to learning path IDs (in LEARNING_PATHS)
+const COURSE_TO_PATH_MAP: Record<string, string> = {
+  "python": "path-python",
+  "java": "path-java",
+  "html-css": "path-html-css",
+  "git": "path-git",
+  "sql": "path-sql",
+  "communication": "path-communication",
+  "leadership": "path-leadership",
+  "time-management": "path-time-management"
+};
+
+const ASSIGNED_COURSE_PATHS: LearningPath[] = [
+  {
+    id: "path-html-css",
+    title: "HTML/CSS Mastery",
+    description: "Build responsive web interfaces with modern HTML and CSS.",
+    xpValue: 100,
+    levels: [
+      { id: "html-css-l1", title: "Level 1: Web Structure", description: "Create semantic HTML page structures.", order: 1 },
+      { id: "html-css-l2", title: "Level 2: Styling Basics", description: "Style pages with selectors, spacing, and layout.", order: 2 },
+      { id: "html-css-l3", title: "Level 3: Responsive Design", description: "Build layouts that work across screen sizes.", order: 3 }
+    ]
+  },
+  {
+    id: "path-communication",
+    title: "Professional Communication",
+    description: "Strengthen written, verbal, and workplace communication skills.",
+    xpValue: 100,
+    levels: [
+      { id: "communication-l1", title: "Level 1: Clear Communication", description: "Practice clear and respectful communication.", order: 1 },
+      { id: "communication-l2", title: "Level 2: Written Communication", description: "Write concise emails and project updates.", order: 2 },
+      { id: "communication-l3", title: "Level 3: Presenting Ideas", description: "Present ideas with confidence and structure.", order: 3 }
+    ]
+  },
+  {
+    id: "path-leadership",
+    title: "Leadership Fundamentals",
+    description: "Develop collaboration, ownership, and team leadership skills.",
+    xpValue: 100,
+    levels: [
+      { id: "leadership-l1", title: "Level 1: Taking Ownership", description: "Set expectations and take responsibility for outcomes.", order: 1 },
+      { id: "leadership-l2", title: "Level 2: Team Collaboration", description: "Support teammates and resolve challenges together.", order: 2 },
+      { id: "leadership-l3", title: "Level 3: Leading Projects", description: "Plan and guide a project from start to finish.", order: 3 }
+    ]
+  },
+  {
+    id: "path-time-management",
+    title: "Time Management & Productivity",
+    description: "Build practical habits for planning and prioritizing work.",
+    xpValue: 100,
+    levels: [
+      { id: "time-management-l1", title: "Level 1: Priorities", description: "Identify important tasks and set priorities.", order: 1 },
+      { id: "time-management-l2", title: "Level 2: Planning", description: "Create realistic plans and meet deadlines.", order: 2 }
+    ]
+  }
+];
+
 export default function LearningHub({ profile, onUpdateProfile }: LearningHubProps) {
-  const [selectedPath, setSelectedPath] = useState<LearningPath>(LEARNING_PATHS[0]);
-  const [activeQuizLevel, setActiveQuizLevel] = useState<any | null>(null);
+  // Determine which paths to show: either assigned courses or all paths if none assigned
+  const availablePaths = React.useMemo(() => {
+    if (!profile.assignedCourses || profile.assignedCourses.length === 0) {
+      return LEARNING_PATHS; // Show all if no courses assigned
+    }
+    
+    const pathIds = profile.assignedCourses
+      .map(courseId => COURSE_TO_PATH_MAP[courseId])
+      .filter(Boolean);
+    
+    const allPaths = [...LEARNING_PATHS, ...ASSIGNED_COURSE_PATHS];
+    return allPaths.filter(path => pathIds.includes(path.id));
+  }, [profile.assignedCourses]);
+
+  const initialPath = availablePaths.length > 0 ? availablePaths[0] : LEARNING_PATHS[0];
+  const [selectedPath, setSelectedPath] = useState<LearningPath>(initialPath);
+  const [activeQuizLevel, setActiveQuizLevel] = React.useState<any | null>(null);
   const [quizSelectedOption, setQuizSelectedOption] = useState<string>("");
   const [quizResult, setQuizResult] = useState<"correct" | "incorrect" | null>(null);
   const [toastMsg, setToastMsg] = useState<string>("");
+
+  // Ensure selectedPath is always valid when availablePaths changes
+  React.useEffect(() => {
+    if (!availablePaths.find(p => p.id === selectedPath.id)) {
+      setSelectedPath(initialPath);
+    }
+  }, [availablePaths, selectedPath.id, initialPath]);
 
   // Helper checked levels status
   const isLevelCompleted = (pathId: string, levelId: string) => {
@@ -146,45 +226,54 @@ export default function LearningHub({ profile, onUpdateProfile }: LearningHubPro
         
         {/* PATH SELECTION SIDEBAR */}
         <div className="lg:col-span-1 space-y-3 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm h-fit">
-          <span className="text-[10px] font-extrabold text-slate-450 uppercase tracking-widest block ml-1 mb-2">Subject Pathways</span>
-          {LEARNING_PATHS.map((path) => {
-            const isSelected = selectedPath.id === path.id;
-            // Calculate progress percentage
-            const total = path.levels.length;
-            const completed = path.levels.filter(lvl => isLevelCompleted(path.id, lvl.id)).length;
-            const percent = Math.round((completed / total) * 100);
+          <span className="text-[10px] font-extrabold text-slate-450 uppercase tracking-widest block ml-1 mb-2">
+            {profile.assignedCourses && profile.assignedCourses.length > 0 ? "Assigned Courses" : "Subject Pathways"}
+          </span>
+          {availablePaths.length === 0 ? (
+            <div className="text-center py-4">
+              <p className="text-xs text-slate-500 font-light">No courses assigned yet</p>
+              <p className="text-[10px] text-slate-400 mt-2">Staff will assign courses for you soon!</p>
+            </div>
+          ) : (
+            availablePaths.map((path) => {
+              const isSelected = selectedPath.id === path.id;
+              // Calculate progress percentage
+              const total = path.levels.length;
+              const completed = path.levels.filter(lvl => isLevelCompleted(path.id, lvl.id)).length;
+              const percent = Math.round((completed / total) * 100);
 
-            return (
-              <button
-                key={path.id}
-                onClick={() => setSelectedPath(path)}
-                className={`w-full p-3.5 rounded-xl text-left transition-all border block ${
-                  isSelected
-                    ? "bg-indigo-600 border-indigo-600 shadow-sm text-white"
-                    : "bg-white hover:bg-slate-50 border-slate-200 text-slate-800"
-                }`}
-              >
-                <div className="flex justify-between items-start mb-1">
-                  <span className="font-extrabold text-xs block leading-tight">{path.title}</span>
-                  <BookOpen className={`h-4 w-4 ${isSelected ? "text-white" : "text-slate-400"}`} />
-                </div>
-                <div className="w-full bg-slate-200/50 rounded-full h-1 mt-2.5">
-                  <div
-                    className={`h-1 rounded-full ${isSelected ? "bg-white" : "bg-indigo-500"}`}
-                    style={{ width: `${percent}%` }}
-                  />
-                </div>
-                <div className="flex justify-between text-[9px] mt-1.5 font-bold">
-                  <span className={isSelected ? "text-indigo-200" : "text-slate-400"}>
-                    {completed}/{total} Completed
-                  </span>
-                  <span className={isSelected ? "text-indigo-150" : "text-indigo-600"}>
-                    {percent}% Complete
-                  </span>
-                </div>
-              </button>
-            );
-          })}
+              return (
+                <button
+                  key={path.id}
+                  onClick={() => setSelectedPath(path)}
+                  className={`w-full p-3.5 rounded-xl text-left transition-all border block ${
+                    isSelected
+                      ? "bg-indigo-600 border-indigo-600 shadow-sm text-white"
+                      : "bg-white hover:bg-slate-50 border-slate-200 text-slate-800"
+                  }`}
+                >
+                  <div className="flex justify-between items-start mb-1">
+                    <span className="font-extrabold text-xs block leading-tight">{path.title}</span>
+                    <BookOpen className={`h-4 w-4 ${isSelected ? "text-white" : "text-slate-400"}`} />
+                  </div>
+                  <div className="w-full bg-slate-200/50 rounded-full h-1 mt-2.5">
+                    <div
+                      className={`h-1 rounded-full ${isSelected ? "bg-white" : "bg-indigo-500"}`}
+                      style={{ width: `${percent}%` }}
+                    />
+                  </div>
+                  <div className="flex justify-between text-[9px] mt-1.5 font-bold">
+                    <span className={isSelected ? "text-indigo-200" : "text-slate-400"}>
+                      {completed}/{total} Completed
+                    </span>
+                    <span className={isSelected ? "text-indigo-150" : "text-indigo-600"}>
+                      {percent}% Complete
+                    </span>
+                  </div>
+                </button>
+              );
+            })
+          )}
         </div>
 
         {/* LEVELS ROADMAP VERTICAL TREE (DUOLINGO MAP) */}
