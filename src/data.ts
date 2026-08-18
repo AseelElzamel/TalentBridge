@@ -130,6 +130,68 @@ export const INITIAL_APPLICATIONS: Application[] = [
     }
   } as unknown as Application,
   {
+    id: "app-marmie-2026",
+    year: 2026,
+    program: "TechNL High School Tech Internships",
+    date: "2026-05-08",
+    status: "Rejected",
+    firstName: "Marmie",
+    lastName: "Ford",
+    email: "marmie@gmail.com",
+    phone: "(709) 222-7788",
+    school: "St. Kevin's High",
+    grade: "Grade 11",
+    resumeName: "marmie_ford_resume.pdf",
+    personalStatement: "I am eager to build technical confidence and improve my programming foundation before reapplying.",
+    skills: ["HTML Basics", "Scratch"],
+    interests: "Web Development, Problem Solving",
+    careerGoals: "Frontend Developer",
+    rejectionReasons: ["Low Java Knowledge", "No Portfolio", "Weak Communication"],
+    ratingScore: 2,
+    evaluationNotes: "This candidate has strong motivation but needs stronger fundamentals and a portfolio before being ready for a placement.",
+    reapplicationCount: 0,
+    skillScores: {
+      java: 18,
+      git: 28,
+      problemSolving: 42,
+      communication: 55,
+      teamwork: 62,
+      portfolio: 10
+    }
+  } as unknown as Application,
+  {
+    id: "app-laila-2026",
+    year: 2026,
+    program: "TechNL High School Tech Internships",
+    date: "2026-05-09",
+    status: "Accepted",
+    firstName: "Laila",
+    lastName: "Rahman",
+    email: "Laila@gmail.com",
+    phone: "(709) 333-9911",
+    school: "Holy Heart of Mary High",
+    grade: "Grade 12",
+    resumeName: "laila_rahman_resume.pdf",
+    portfolioUrl: "https://laila-portfolio.dev",
+    linkedInUrl: "https://linkedin.com/in/laila-nl",
+    personalStatement: "I enjoy designing accessible web tools and I am excited to contribute to a real technical team.",
+    skills: ["HTML", "CSS", "JavaScript", "React", "Figma"],
+    interests: "Frontend UX, Design Systems",
+    careerGoals: "Product Frontend Engineer",
+    ratingScore: 5,
+    evaluationNotes: "Very strong communication and design abilities. She is ready to join a placement team immediately.",
+    staffNotes: "Strong match for product design and front-end learning track.",
+    reapplicationCount: 0,
+    skillScores: {
+      java: 58,
+      git: 86,
+      problemSolving: 84,
+      communication: 92,
+      teamwork: 88,
+      portfolio: 90
+    }
+  } as unknown as Application,
+  {
     id: "app-james-2026",
     year: 2026,
     program: "TechNL High School Tech Internships",
@@ -263,8 +325,64 @@ export const INITIAL_STUDENT_PROFILES: StudentProfile[] = [
     goals: []
   },
   {
+    studentEmail: "marmie@gmail.com",
+    applications: [INITIAL_APPLICATIONS[5]],
+    xp: 150,
+    streak: 4,
+    badges: ["First Step"],
+    lessonsCompleted: {
+      "path-python": ["python-l1"]
+    },
+    journals: [],
+    checkins: [],
+    goals: []
+  },
+  {
+    studentEmail: "Laila@gmail.com",
+    applications: [INITIAL_APPLICATIONS[6]],
+    xp: 760,
+    streak: 8,
+    badges: ["Accepted Intern", "Design Thinker"],
+    lessonsCompleted: {
+      "path-python": ["python-l1", "python-l2"],
+      "path-react": ["react-l1"]
+    },
+    journals: [
+      {
+        id: "laila-journal-1",
+        date: "2026-06-18",
+        content: "Completed styling and accessibility review for the onboarding flow. It felt like a great step toward production-ready work.",
+        hoursSpent: 7,
+        mood: "excellent"
+      }
+    ],
+    checkins: [
+      {
+        id: "laila-checkin-1",
+        weekNumber: 1,
+        date: "2026-06-17",
+        accomplishments: "Built a prototype dashboard layout and reviewed code with my mentor.",
+        challenges: "Balancing design polish with technical deadlines.",
+        supportNeeded: "Need one extra code review for responsive components.",
+        submitted: true,
+        attendanceVerified: true,
+        mentorRating: 5
+      }
+    ],
+    goals: [
+      {
+        id: "laila-goal-1",
+        title: "Launch analytics dashboard",
+        description: "Publish the mentorship dashboard prototype for stakeholder review.",
+        dueDate: "2026-06-30",
+        status: "in-progress",
+        progress: 70
+      }
+    ]
+  },
+  {
     studentEmail: "james.martinez@email.com",
-    applications: [INITIAL_APPLICATIONS[4]],
+    applications: [INITIAL_APPLICATIONS[7]],
     xp: 150,
     streak: 1,
     badges: ["First Step"],
@@ -289,6 +407,71 @@ export const INITIAL_STUDENT_PROFILES: StudentProfile[] = [
 ];
 
 export const LEARNING_PATHS: LearningPath[] = [
+  {
+    id: "path-python",
+    title: "Python Fundamentals",
+    description: "Build Python confidence through interactive logic, loops, and real practice exercises.",
+    xpValue: 100,
+    levels: [
+      {
+        id: "python-l1",
+        title: "Level 1: Variables & Data Types",
+        description: "Understand integers, strings, floats, booleans, and type conversion in Python.",
+        order: 1,
+        activity: {
+          type: "video",
+          title: "Python Basics Intro",
+          description: "Watch a short beginner-friendly overview of Python variables and data types.",
+          url: "https://www.youtube.com/watch?v=kqtD5dpn9C8",
+          provider: "YouTube"
+        },
+        quiz: {
+          question: "Which Python data type is used to represent whole numbers?",
+          options: ["str", "float", "int", "bool"],
+          correctAnswer: "int",
+          hint: "Think of the type used for numbers without decimals."
+        }
+      },
+      {
+        id: "python-l2",
+        title: "Level 2: Conditions & Logic",
+        description: "Write if/else statements and decision logic with comparisons.",
+        order: 2,
+        activity: {
+          type: "video",
+          title: "If Statements in Python",
+          description: "Review logic gates and conditional structure through a step-by-step lesson.",
+          url: "https://www.youtube.com/watch?v=IFqgXJ_X8pI",
+          provider: "YouTube"
+        },
+        quiz: {
+          question: "Which keyword checks if a condition is true before executing a block in Python?",
+          options: ["then", "when", "if", "while"],
+          correctAnswer: "if",
+          hint: "This keyword begins a conditional block in Python."
+        }
+      },
+      {
+        id: "python-l3",
+        title: "Level 3: Loops & Interactive Practice",
+        description: "Use loops to repeat tasks and work through a hands-on challenge game.",
+        order: 3,
+        activity: {
+          type: "game",
+          title: "CodeTales Python Adventure",
+          description: "Play the interactive game to practice loops and logic in a story-based coding challenge.",
+          url: "https://codetales.netlify.app/",
+          provider: "CodeTales"
+        },
+        quiz: {
+          question: "Which loop is best when you want to repeat code a known number of times in Python?",
+          options: ["for loop", "if statement", "switch case", "while True"],
+          correctAnswer: "for loop",
+          hint: "This loop is ideal for fixed iteration counts."
+        }
+      }
+    ]
+  },
   {
     id: "path-java",
     title: "Java Fundamentals",

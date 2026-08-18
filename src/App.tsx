@@ -11,6 +11,8 @@ import InternshipPortal from "./components/InternshipPortal";
 import SkillsGapView from "./components/SkillsGapView";
 import LearningHub from "./components/LearningHub";
 import AnalyticsDashboard from "./components/AnalyticsDashboard";
+import StudentCalendarPage from "./components/StudentCalendarPage";
+import MyProfilePage from "./components/MyProfilePage";
 
 // Icons
 import {
@@ -334,6 +336,9 @@ export default function App() {
                 onLogout={handleLogout}
                 pendingCount={allApplications.filter(a => a.status === "Pending Review").length}
                 atRiskCount={calcAtRiskCount()}
+                showSkillsGap={currentUser.role === "TechNL Staff" || (currentUser.role === "Student" && latestApp?.status === "Rejected")}
+                isRejected={currentUser.role === "Student" && latestApp?.status === "Rejected"}
+                profilePicture={currentUser.role === "Student" ? studentProfile?.profilePicture : undefined}
               />
 
               {/* DYNAMIC SCROLL CONTAINER ROW */}
@@ -414,7 +419,7 @@ export default function App() {
                     />
                   )}
 
-                  {activeTab === "skills-gap" && (
+                  {activeTab === "skills-gap" && ((currentUser.role === "TechNL Staff") || (currentUser.role === "Student" && latestApp?.status === "Rejected")) && (
                     <SkillsGapView
                       application={latestApp}
                       onGoToHub={() => setActiveTab("learning-hub")}
@@ -430,6 +435,10 @@ export default function App() {
 
                   {activeTab === "analytics" && currentUser.role === "TechNL Staff" && (
                     <AnalyticsDashboard />
+                  )}
+
+                  {activeTab === "calendar" && studentProfile && (
+                    <StudentCalendarPage userEmail={currentUser.email} />
                   )}
 
                   {activeTab === "my-internship" && studentProfile && (
@@ -460,30 +469,12 @@ export default function App() {
                     </div>
                   )}
 
-                  {activeTab === "my-profile" && (
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
-                      <h2 className="text-lg font-black text-slate-800 tracking-tight border-b border-slate-100 pb-3">My Registered Credentials</h2>
-                      {latestApp ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs leading-relaxed text-slate-600">
-                          <div className="space-y-2">
-                            <p><strong>Filing ID:</strong> {latestApp.id}</p>
-                            <p><strong>First Name:</strong> {latestApp.firstName}</p>
-                            <p><strong>Last Name:</strong> {latestApp.lastName}</p>
-                            <p><strong>School:</strong> {latestApp.school}</p>
-                            <p><strong>Grade Level:</strong> {latestApp.grade}</p>
-                          </div>
-                          <div className="space-y-2">
-                            <p><strong>Email Address:</strong> {latestApp.email}</p>
-                            <p><strong>Phone Connection:</strong> {latestApp.phone}</p>
-                            <p><strong>Submitted Resume:</strong> {latestApp.resumeName}</p>
-                            <p><strong>LinkedIn Port:</strong> {latestApp.linkedInUrl || "None entered"}</p>
-                            <p><strong>Portfolio Host:</strong> {latestApp.portfolioUrl || "None entered"}</p>
-                          </div>
-                        </div>
-                      ) : (
-                        <p className="text-xs text-slate-500">No application file submitted yet. Go over to signup form.</p>
-                      )}
-                    </div>
+                  {activeTab === "my-profile" && studentProfile && latestApp && (
+                    <MyProfilePage
+                      latestApp={latestApp}
+                      studentProfile={studentProfile}
+                      onUpdateProfile={handleUpdateStudentProfile}
+                    />
                   )}
 
                 </div>
@@ -595,7 +586,7 @@ export default function App() {
                     </div>
                   )}
 
-                  {mobileTab === "gaps" && (
+                  {mobileTab === "gaps" && latestApp?.status === "Rejected" && (
                     <div className="space-y-4">
                       {latestApp ? (
                         <SkillsGapView
@@ -651,15 +642,17 @@ export default function App() {
                     <span>Duolingo Hub</span>
                   </button>
 
-                  <button
-                    onClick={() => setMobileTab("gaps")}
-                    className={`flex flex-col items-center space-y-0.5 text-[9px] font-bold ${
-                      mobileTab === "gaps" ? "text-indigo-600" : "text-slate-400 hover:text-slate-600"
-                    }`}
-                  >
-                    <Compass className="h-4.5 w-4.5" />
-                    <span>Gaps analysis</span>
-                  </button>
+                  {latestApp?.status === "Rejected" && (
+                    <button
+                      onClick={() => setMobileTab("gaps")}
+                      className={`flex flex-col items-center space-y-0.5 text-[9px] font-bold ${
+                        mobileTab === "gaps" ? "text-indigo-600" : "text-slate-400 hover:text-slate-600"
+                      }`}
+                    >
+                      <Compass className="h-4.5 w-4.5" />
+                      <span>Gaps analysis</span>
+                    </button>
+                  )}
 
                   <button
                     onClick={() => setMobileTab("profile")}

@@ -2,17 +2,15 @@ import {
   Award,
   BookOpen,
   Briefcase,
+  CalendarDays,
   ChevronLeft,
   ChevronRight,
-  ClipboardList,
   Compass,
   FileBarChart2,
   GitBranch,
-  GraduationCap,
   LayoutDashboard,
   LogOut,
   Settings,
-  ShieldAlert,
   Users
 } from "lucide-react";
 import React from "react";
@@ -27,6 +25,9 @@ interface SidebarProps {
   onLogout: () => void;
   pendingCount?: number;
   atRiskCount?: number;
+  showSkillsGap?: boolean;
+  isRejected?: boolean;
+  profilePicture?: string;
 }
 
 export default function Sidebar({
@@ -37,7 +38,10 @@ export default function Sidebar({
   userName,
   onLogout,
   pendingCount = 0,
-  atRiskCount = 0
+  atRiskCount = 0,
+  showSkillsGap = true,
+  isRejected = false,
+  profilePicture = undefined
 }: SidebarProps) {
   const [collapsed, setCollapsed] = React.useState(false);
 
@@ -61,9 +65,10 @@ export default function Sidebar({
   ];
 
   const studentItems: SidebarItem[] = [
-    { id: "my-internship", label: "My Internship", icon: Briefcase },
+    ...(isRejected ? [] : [{ id: "my-internship", label: "My Internship", icon: Briefcase }]),
+    ...(isRejected ? [] : [{ id: "calendar", label: "Calendar", icon: CalendarDays }]),
     { id: "learning-hub", label: "Learning Hub", icon: BookOpen },
-    { id: "skills-gap", label: "Skills Gap Analysis", icon: Compass },
+    ...(showSkillsGap ? [{ id: "skills-gap", label: "Skills Gap Analysis", icon: Compass }] : []),
     { id: "my-profile", label: "My Profile", icon: Settings },
   ];
 
@@ -101,9 +106,17 @@ export default function Sidebar({
         {/* ROLE INDICATOR COMPONENT */}
         {!collapsed && (
           <div className="mx-4 my-4 p-3 bg-slate-800/60 rounded-xl border border-slate-700/50 flex items-center space-x-2.5">
-            <div className="h-7 w-7 rounded-lg bg-indigo-950/80 flex items-center justify-center text-indigo-400 font-bold">
-              {role === "TechNL Staff" ? <Briefcase className="h-4 w-4 text-violet-400" /> : <Award className="h-4 w-4 text-emerald-400" />}
-            </div>
+            {role === "Student" && profilePicture ? (
+              <img
+                src={profilePicture}
+                alt={userName}
+                className="h-9 w-9 rounded-lg object-cover shadow-lg"
+              />
+            ) : (
+              <div className="h-9 w-9 rounded-lg bg-indigo-950/80 flex items-center justify-center text-indigo-400 font-bold">
+                {role === "TechNL Staff" ? <Briefcase className="h-4 w-4 text-violet-400" /> : <Award className="h-4 w-4 text-emerald-400" />}
+              </div>
+            )}
             <div>
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Logged in as</span>
               <span className="text-xs font-semibold text-slate-200 block truncate max-w-[140px]">{userName}</span>

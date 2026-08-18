@@ -274,11 +274,34 @@ export default function InternshipPortal({
 
           {/* COL 3 STUDENT SIDEBAR: SUBMIT WEEKLY FORM */}
           <div className="space-y-6">
-            
+            {/* UPCOMING MEETINGS */}
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Upcoming Mentor Syncs</span>
+              <div className="space-y-2.5">
+                <div className="p-3 bg-violet-50/50 rounded-xl border border-violet-100 flex items-start justify-between gap-3">
+                  <div className="flex items-start space-x-3">
+                    <Calendar className="h-4.5 w-4.5 text-violet-600 mt-0.5" />
+                    <div className="text-xs">
+                      <span className="font-extrabold text-slate-800 block">Weekly Advisor Sync</span>
+                      <span className="text-[10px] text-slate-500 font-bold block">Friday, June 20 at 11:00 AM</span>
+                    </div>
+                  </div>
+                  <a
+                    href="https://zoom.us/j/1234567890?pwd=TechNLStudentMeeting"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center rounded-lg bg-violet-600 px-3 py-2 text-[10px] font-bold text-white shadow-sm hover:bg-violet-700 transition-all"
+                  >
+                    Join Meeting
+                  </a>
+                </div>
+              </div>
+            </div>
+
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
               <div className="flex items-center space-x-2">
-                <FileText className="h-5 w-5 text-indigo-600" />
-                <h3 className="font-extrabold text-sm text-slate-800 tracking-tight">Active Weekly Survey Report</h3>
+                <Sparkles className="h-5 w-5 text-indigo-600" />
+                <h3 className="font-extrabold text-sm text-slate-800 tracking-tight">Weekly Check-In</h3>
               </div>
 
               <form onSubmit={handleSubmitCheckin} className="space-y-3 text-xs text-slate-600">
@@ -326,20 +349,6 @@ export default function InternshipPortal({
                   <span>Submit Weekly Check-In</span>
                 </button>
               </form>
-            </div>
-
-            {/* UPCOMING MEETINGS */}
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Upcoming Mentor Syncs</span>
-              <div className="space-y-2.5">
-                <div className="p-3 bg-violet-50/50 rounded-xl border border-violet-100 flex items-start space-x-3">
-                  <Calendar className="h-4.5 w-4.5 text-violet-600 mt-0.5" />
-                  <div className="text-xs">
-                    <span className="font-extrabold text-slate-800 block">Weekly Advisor Sync</span>
-                    <span className="text-[10px] text-slate-500 font-bold block">Friday, June 20 at 11:00 AM</span>
-                  </div>
-                </div>
-              </div>
             </div>
 
           </div>

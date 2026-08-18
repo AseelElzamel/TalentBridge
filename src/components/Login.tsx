@@ -201,20 +201,20 @@ export default function Login({ onLogin }: LoginProps) {
 
               <button
                 type="button"
-                onClick={() => handleQuickLogin("Student", "emma.wilson@email.com")}
+                onClick={() => handleQuickLogin("Student", "marmie@gmail.com")}
                 className="py-2.5 px-3 bg-white hover:bg-indigo-50 hover:border-indigo-300 border border-slate-200 rounded-lg text-slate-700 text-left transition-all"
               >
                 <span className="block font-bold text-rose-700">🎯 Rejected / Improvement</span>
-                <span className="text-[10px] text-slate-500">Emma: Skill Gap Radar & Gamified Learning</span>
+                <span className="text-[10px] text-slate-500">Marmie: Skill Gap Radar & Improvement Plan</span>
               </button>
 
               <button
                 type="button"
-                onClick={() => handleQuickLogin("Student", "newapplicant@email.com")}
+                onClick={() => handleQuickLogin("Student", "Laila@gmail.com")}
                 className="py-2.5 px-3 bg-white hover:bg-indigo-50 hover:border-indigo-300 border border-slate-200 rounded-lg text-slate-700 text-left transition-all"
               >
-                <span className="block font-bold text-amber-700">📝 Pending Review</span>
-                <span className="text-[10px] text-slate-500">New Signup flow & Multi-Step Application Form</span>
+                <span className="block font-bold text-emerald-700">✅ Accepted Student</span>
+                <span className="text-[10px] text-slate-500">Laila: Active placement and my internship</span>
               </button>
             </div>
           </div>

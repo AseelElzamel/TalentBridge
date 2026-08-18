@@ -38,6 +38,10 @@ export default function LearningHub({ profile, onUpdateProfile }: LearningHubPro
     setQuizResult(null);
   };
 
+  const launchActivity = (url: string) => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   const handleCheckQuizAnswer = () => {
     if (!activeQuizLevel) return;
     const isCorrect = quizSelectedOption === activeQuizLevel.quiz.correctAnswer;
@@ -230,9 +234,21 @@ export default function LearningHub({ profile, onUpdateProfile }: LearningHubPro
                   </button>
 
                   {/* MINI LABEL CHIPS */}
-                  <div className="bg-white border border-slate-200/90 py-1.5 px-3.5 rounded-full mt-2.5 shadow-xs text-center">
+                  <div className="bg-white border border-slate-200/90 py-1.5 px-3.5 rounded-full mt-2.5 shadow-xs text-center max-w-[220px]">
                     <span className="block font-black text-slate-800 text-[10px] uppercase tracking-wider">{level.title}</span>
                     <span className="block text-[9px] text-slate-450 truncate max-w-[150px]">{level.description}</span>
+                    {level.activity && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (level.activity?.url) launchActivity(level.activity.url);
+                        }}
+                        className="mt-2 inline-flex items-center gap-1 rounded-full bg-violet-50 px-2 py-1 text-[8px] font-bold text-violet-700 border border-violet-200 hover:bg-violet-100"
+                      >
+                        {level.activity.type === "game" ? "Play Game" : "Watch Lesson"}
+                      </button>
+                    )}
                   </div>
                 </div>
               );
@@ -263,6 +279,26 @@ export default function LearningHub({ profile, onUpdateProfile }: LearningHubPro
             </div>
 
             <div className="p-6 space-y-5">
+              {activeQuizLevel.activity && (
+                <div className="rounded-2xl border border-violet-200 bg-violet-50 p-4 space-y-2">
+                  <span className="text-[10px] font-extrabold text-violet-700 uppercase tracking-wider block">Learning activity</span>
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-bold text-slate-800">{activeQuizLevel.activity.title}</p>
+                      <p className="text-[11px] text-slate-600">{activeQuizLevel.activity.description}</p>
+                    </div>
+                    {activeQuizLevel.activity.url && (
+                      <button
+                        type="button"
+                        onClick={() => launchActivity(activeQuizLevel.activity.url!)}
+                        className="shrink-0 rounded-lg bg-violet-600 px-3 py-2 text-[10px] font-bold text-white hover:bg-violet-700"
+                      >
+                        {activeQuizLevel.activity.type === "game" ? "Open Game" : "Open Lesson"}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
               
               <div className="space-y-1.5 border-b border-slate-100 pb-3">
                 <span className="text-[10px] font-extrabold text-violet-600 block uppercase tracking-wider">Instructions: Answer correctly to earn 100 XP</span>

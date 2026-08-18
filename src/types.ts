@@ -54,6 +54,7 @@ export interface StudentProfile {
   checkins: WeeklyCheckin[];
   goals: InternshipGoal[];
   flaggedAtRisk?: boolean;
+  profilePicture?: string; // Base64 encoded image
 }
 
 export interface JournalEntry {
@@ -95,7 +96,14 @@ export interface LearningPath {
     title: string;
     description: string;
     order: number;
-    quiz: {
+    activity?: {
+      type: "video" | "game" | "exercise";
+      title: string;
+      description: string;
+      url?: string;
+      provider?: string;
+    };
+    quiz?: {
       question: string;
       options: string[];
       correctAnswer: string;
